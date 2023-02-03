@@ -67,7 +67,7 @@ const questions = () =>
 const viewAllDepartments = () => {
     const sql = `SELECT * FROM department`;
     db.query(sql, (err, res) => {
-        if (err) console.error;
+        if (err) console.log(err);
         console.table(res);
         questions();
     })
@@ -77,7 +77,7 @@ const viewAllDepartments = () => {
 const viewAllRoles = () => {
     const sql = `SELECT * FROM roles`;
     db.query(sql, (err, res) => {
-        if (err) console.err;
+        if (err) console.log(err);
         console.table(res);
         questions();
     })
@@ -86,7 +86,7 @@ const viewAllRoles = () => {
 const viewAllEmployees = () => {
     const sql = `SELECT * FROM employee INNER JOIN roles ON employee.role_id = roles.roles_id INNER JOIN department ON roles.department_id = department.department_id `;
     db.query(sql, (err, res) => {
-        if (err) console.err;
+        if (err) console.log(err);
         console.log("This is a list of all our current employees:");
         console.table(res);
         questions();
@@ -101,7 +101,7 @@ const addDepartment = () =>
     }]).then(answers => {
         let sql = "INSERT INTO department (department_name) VALUES (?)"
         db.query(sql, answers.addedDep, (err, res) => {
-            if (err) console.err;
+            if (err) console.log(err);
             console.log("Department added successfully!")
             questions();
         })
@@ -119,12 +119,47 @@ const addRole = () =>
         message: "What is the salary of the new role?"
     },
     ]).then(answers => {
-        db.query(`INSERT INTO roles (title, salary) VALUES ('${answers.roleName}', ${answers.salary})`, (err, res) => {
-            if (err) console.err;
+        db.query(`INSERT INTO roles (title, salary) VALUES (${answers.roleName}, ${answers.salary})`, (err, res) => {
+            if (err) console.log(err);
             console.log("Role added successfully!"),
-            questions();
+                questions();
         })
     })
 
 
+const addEmployee = () =>
+    inquirer.prompt([{
+        type: "input",
+        name: "firstEmpName",
+        message: "What is the first name of the new employee?"
+    },
+    {
+        type: "input",
+        name: "lastEmpName",
+        message: "What is the last name of the new employee?"
+    },
+    {
+        type: "input",
+        name: "empRole",
+        message: "What is the role of the new employee going to be? 1: Supervisor, 2: Senior Developer, 3: Junior Developer, 4: Hiring Interviewer, 5: Data Scientist, 6: System Adminsartor"
+    },
+    {
+        type: "input",
+        name: "empManager",
+        message: "What is the manager id of the new employee?"
+    },
+    ]).then(function(answers) {
+        db.query("INSERT INTO employee SET ?", {
+            first_name: answers.firstEmpName,
+            last_name: answers.lastEmpName,
+            role_id: answers.empRole,
+            manager_id: answers.empManager
+        }, function(err) {
+            if (err) throw err;
+            console.log("Employee added succesfully!");
+            questions();
+        })
+    });
+        
+            
 questions();
