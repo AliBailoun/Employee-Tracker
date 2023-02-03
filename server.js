@@ -1,8 +1,8 @@
-// const connection = require("./db/connection");
 const inquirer = require("inquirer");
 const conTab = require("console.table");
 const mysql = require("mysql2");
-
+const figlet = require("figlet");
+const gradient = require("gradient-string");
 
 
 const db = mysql.createConnection(
@@ -12,7 +12,6 @@ const db = mysql.createConnection(
         password: '1234',
         database: 'employee_db'
     },
-    console.log(`Connected to the employee database.`)
 );
 
 
@@ -32,8 +31,8 @@ const questions = () =>
             "Add an employee",
             "Update an employee role",
             "Quit"
-
         ],
+
     }]).then(answers => {
         switch (answers.options) {
             case "View all departments":
@@ -148,18 +147,30 @@ const addEmployee = () =>
         name: "empManager",
         message: "What is the manager id of the new employee?"
     },
-    ]).then(function(answers) {
+    ]).then(function (answers) {
         db.query("INSERT INTO employee SET ?", {
             first_name: answers.firstEmpName,
             last_name: answers.lastEmpName,
             role_id: answers.empRole,
             manager_id: answers.empManager
-        }, function(err) {
+        }, function (err) {
             if (err) throw err;
             console.log("Employee added succesfully!");
             questions();
         })
     });
-        
-            
-questions();
+
+    figlet.text('   Welcome To Employee Tracker!', {
+        font: 'Standard',
+        horizontalLayout: 'default',
+        verticalLayout: 'default'
+    }, function (err, data) {
+        if (err) {
+            console.log('Something went wrong...');
+            console.dir(err);
+            return;
+        }
+        console.log(gradient.rainbow.multiline(data));
+    });
+    
+    setTimeout(questions, 2000);
