@@ -1,5 +1,5 @@
 const inquirer = require("inquirer");
-const conTab = require("console.table");
+const table = require("console.table");
 const mysql = require("mysql2");
 const figlet = require("figlet");
 const gradient = require("gradient-string");
@@ -29,7 +29,6 @@ const questions = () =>
             "Add a department",
             "Add a role",
             "Add an employee",
-            "Update an employee role",
             "Quit"
         ],
 
@@ -53,11 +52,9 @@ const questions = () =>
             case "Add an employee":
                 addEmployee();
                 break;
-            case "Update an employee role":
-                updateRole();
-                break;
             case "Quit":
-                quit();
+                db.end()
+                console.log("Bye")
                 break;
         }
     });
@@ -160,17 +157,18 @@ const addEmployee = () =>
         })
     });
 
-    figlet.text('   Welcome To Employee Tracker!', {
-        font: 'Standard',
-        horizontalLayout: 'default',
-        verticalLayout: 'default'
-    }, function (err, data) {
-        if (err) {
-            console.log('Something went wrong...');
-            console.dir(err);
-            return;
-        }
-        console.log(gradient.rainbow.multiline(data));
-    });
-    
-    setTimeout(questions, 2000);
+
+figlet.text('              Welcome To Employee Tracker!', {
+    font: 'Standard',
+    horizontalLayout: 'default',
+    verticalLayout: 'default'
+}, function (err, data) {
+    if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+    }
+    console.log(gradient.rainbow.multiline(data));
+});
+
+setTimeout(questions, 1000);
