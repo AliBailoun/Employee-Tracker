@@ -115,7 +115,7 @@ const addRole = () =>
         message: "What is the salary of the new role?"
     },
     ]).then(answers => {
-        db.query(`INSERT INTO roles (title, salary) VALUES (${answers.roleName}, ${answers.salary})`, (err, res) => {
+        db.query(`INSERT INTO roles (title, salary) VALUES ("${answers.roleName}", "${answers.salary}")`, (err, res) => {
             if (err) console.log(err);
             console.log("Role added successfully!"),
                 questions();
