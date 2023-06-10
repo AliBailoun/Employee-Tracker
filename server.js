@@ -137,7 +137,7 @@ const addEmployee = () =>
     {
         type: "input",
         name: "empRole",
-        message: "What is the role of the new employee going to be? 1: Supervisor, 2: Senior Developer, 3: Junior Developer, 4: Hiring Interviewer, 5: Data Scientist, 6: System Adminsartor"
+        message: "What is the role of the new employee going to be? 1: Supervisor, 2: Senior Developer, 3: Junior Developer, 4: Hiring Interviewer, 5: Data Scientist, 6: System Adminstrator"
     },
     {
         type: "input",
