@@ -2,7 +2,7 @@
 
 # Description:
 
-## Welcome to a professional employee tracking application that uses inquirer.js to interact with a use via the command line, MySQL2 in order to retrieve and recieve information from the database and console.table to print MySQL rows into the console.
+## Welcome to a professional employee tracking application that uses inquirer.js to interact with a user via the command line, MySQL2 in order to retrieve and recieve information from the database and console.table to print MySQL rows into the console.
 
 # How to use:
 
